@@ -2,7 +2,7 @@ Homework #5
 
 ---
 
- **1)  Constructor basics **
+ **1)  Constructor basics**
 
 This is a sequence of simple exercises related to how constructors and prototypes work.
 
@@ -75,7 +75,7 @@ Implement another method _clear()_ that will reset the board back to being empty
 **d)** _[moderately difficult]_  Add an optional parameter to the TicTacToeBoard constructor providing a callback function which, if available, is called whenever the game ends, either in a win or a draw.  You may decide what the callback does in each case, but a message to console.log would be an easy choice.
 
 ---
-**3) Cards Schmards **
+**3) Cards Schmards**
 
 _(Note: If you're fed up with the cards, you don't have to write all the methods.  Just do a few to make sure you understand how to attach and call them in the constructor pattern.)_
 
@@ -102,7 +102,7 @@ The corresponding class and instance methods will have very similar code; try to
 If you're using an IIFE module, it can contain private helper functions useable by both _Card_ and _Card.prototype_, or the prototype methods can make use of the class methods.
 
 ---
-**4) Simple Subclassing **
+**4) Simple Subclassing**
 
 _(OPTIONAL:  If you didn't understand the brief explanation of inheritance in class, don't worry about this one.  If you think you get it and want some practice, give it a try!)_
 
