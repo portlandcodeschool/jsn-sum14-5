@@ -34,12 +34,14 @@ obj1.d and obj2.d are both 3, as you would expect--they inherit from their proto
 
 b) [easy] Having understood how the above sequence plays out, now let's get a little more practice. Start with the following code: */
 
-function User(name,pw) {
+function User(name,pw, dislikable) {
     this.getName = function () {return name;};
     this.validate = function (str) {return (pw === str);};
+    this.dislikability = dislikable;
+    this.isDislikable = function(dislikable) {return (this.dislikability || false)};
 }
 var kynareth = new User("Kynareth","treehugger");
-var talos = new User("Talos","imawes0me");
+var talos = new User("Talos","imawes0me", true);
 var akatosh = new User("Akatosh","password");
 
 /*We realize that we want to make some changes so that objects made with constructor User will have an extra field called isDislikeable which should be false by default, but set to true for talos. Change the code above as needed. (Hint: You could do it by mentioning "Talos" specifically in the constructor, but that generalizes badly. Find a better way!)
