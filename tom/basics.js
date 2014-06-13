@@ -59,20 +59,5 @@ B.prototype.num = 0;
 B.prototype.str = 'default';
 var objB = new B();
 
-/*There is a difference between the behaviors of objA and objB! Explain.
-We realize that we want to make some changes so that objects made with constructor User will have an extra field called isDislikeable which should be false by default, but set to true for talos. Change the code above as needed. (Hint: You could do it by mentioning "Talos" specifically in the constructor, but that generalizes badly. Find a better way!)
-
-c) [moderate] Finally, let's try one more small exercise using prototypes to define defaults. Consider this code:*/
-
-function A() {};
-//set default values for instances of A:
-A.prototype = {num:0, str:'default'};
-var objA = new A();
-
-function B() {};
-// set default values for instances of B:
-B.prototype.num = 0;
-B.prototype.str = 'default';
-var objB = new B();
-
-/*There is a difference between the behaviors of objA and objB! Explain.*/
+//There is a difference between the behaviors of objA and objB! Explain.
+// Good question! I think it might be that the constructor of ObjA is Object because of how it was declared?
