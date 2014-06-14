@@ -1,4 +1,139 @@
+function TicTacToeBoard() {
 
+  this.rows = (function() {
+    var rowArray = [['-','-','-'], ['-','-','-'], ['-','-','-']];
+    return rowArray;
+  });
+
+  this.placeX= function (row, column) {
+    this.rows[row - 1][column - 1] = 'X';
+  },
+  this.placeO= function (row, column) {
+    this.rows[row - 1][column - 1] = 'O';
+  },
+  this.clear= function () {
+
+  },
+  this.winner= function () {
+
+  },
+  this.show= function() {
+    var display = '';
+    this.rows.forEach( function(row) {
+      display = '';
+      row.forEach( function(cell) {
+        display += cell;
+      });
+      console.log(display); 
+    }
+    )}
+}
+
+/*TicTacToeBoard.prototype = {
+
+  placeX: function (row, column) {
+    this.rows[row - 1][column - 1] = 'X';
+  },
+  placeO: function (row, column) {
+    this.rows[row - 1][column - 1] = 'O';
+  },
+  clear: function () {
+
+  },
+  winner: function () {
+
+  },
+  show: function() {
+    var display = '';
+    this.rows.forEach( function(row) {
+      display = '';
+      row.forEach( function(cell) {
+        display += cell;
+      });
+      console.log(display); 
+    }
+    )}
+}*/
+
+
+var test = new TicTacToeBoard;
+test.placeX(1,1);
+test.placeO(2,2);
+test.placeX(3,3);
+test.placeO(2,3);
+test.placeX(2,1);
+test.placeO(1,3);
+test.show();
+test.rows[1][0] = 'apple';
+test.show();
+
+/*function TicTacToeBoard() {
+  this.rows = rows = [[], [], []];
+
+  this.placeX = function (row, column) {
+    rows[row - 1[column - 1]] = 'X';
+  };
+  this.placeO = function (row, column) {
+    rows[row - 1[column - 1]] = 'O';
+  };
+  this.clear = function () {
+
+  };
+  this.winner = function () {
+
+  };
+  this.show = function() {
+    this.rows.forEach( function(row) { 
+      row.forEach( function(cell) {
+        console.log(cell);
+      });
+      console.log('/n'); 
+    });
+  };
+
+}*/
+
+/*function TicTacToeBoard() {
+    this.makeBoard = function() {
+        var rows = [[], [], []], board = {};
+        
+        board.placeX = function (row, column) {
+            rows[row - 1[column - 1]] = 'X';
+        };
+        
+        board.placeO = function (row, column) {
+            rows[row - 1[column - 1]] = 'O';
+        };
+        
+        board.clear = function () {
+            
+        };
+        
+        board.winner = function () {
+            
+        };
+        
+        return board;
+    }
+}*/
+
+/*function TicTacToeBoard() {
+    this.rows = [[], [], []];
+    this.board = function () {
+        placeX = function (row, column) {
+            rows[row - 1[column - 1]] = 'X';
+        };
+        placeO = function (row, column) {
+            rows[row - 1[column - 1]] = 'O';
+        };
+        clear = function () {
+
+        };
+        winner = function () {
+
+        };
+    };
+        return this.board;*/
 
 /*2) Tic-Tac-Toe
 
@@ -21,3 +156,17 @@ Implement another method clear() that will reset the board back to being empty.
 c) [moderate] Implement a method .winner() that will check the board and, if there is a winner, return the three coordinates of the squares that made up the win as an array of objects of the form {x: ?, y: ?}. If there are multiple winning configurations on the board, just return one of them; it doesn't matter which. Give the returned array one extra property named 'winner' indicating which symbol occupies those winning spaces.
 
 d) [moderately difficult] Add an optional parameter to the TicTacToeBoard constructor providing a callback function which, if available, is called whenever the game ends, either in a win or a draw. You may decide what the callback does in each case, but a message to console.log would be an easy choice.*/
+
+/*function TicTacToeSpace() {
+  this.owner = undefined;
+}
+function TicTacToeRow() {
+  this.left = new TicTacToeSpace;
+  this.middle = new TicTacToeSpace;
+  this.right = new TicTacToeSpace;
+}
+function TicTacToeBoard() {
+  this.upper = new TicTacToeRow;
+  this.middle  = new TicTacToeRow;
+  this.bottom = new TicTacToeRow;
+}*/
