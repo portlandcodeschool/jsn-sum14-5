@@ -1,4 +1,34 @@
+function Animal() {
+  this.move = function() {
+    return 'walk';
+  }
+}
 
+function Bird() {
+  Bird.prototype = new Animal();
+  Bird.prototype.constructor = Bird;
+  this.move = function() {
+    return 'fly';
+  }
+  this.hasWings = true;
+}
+
+
+function Fish() {
+  Fish.prototype = new Animal();
+  Fish.prototype.constructor = Fish;
+  this.move = function() {
+    return 'swim';
+  }
+}
+
+function Penguin() {
+  Penguin.prototype = new Bird();
+  Penguin.prototype. constructor = Bird;
+  this.move = function() {
+    return 'swim';
+  }
+}
 
 /*4) Simple Subclassing
 
@@ -11,7 +41,7 @@
     Fish: Another subclass of Animal. A Fish instance will "swim" instead of "walk".
     Penguin: A subclass of Bird. Penguins cannot fly, so they should return "swim" when moving.
 
-You should see these behaviors:
+You should see these behaviors:*/
 
 new Animal().move();// 'walk'
 new Fish().move();// 'swim'
@@ -19,7 +49,7 @@ new Bird().move();// 'fly'
 var pengo = new Penguin();
 pengo.move();  //'swim'
 pengo.hasWings; //true;
-pengo instanceof Bird; //true
+pengo instanceof Bird; //true For some reason this is failing, but it's 1am.
 pengo instanceof Animal; //true
 
-Bonus: see if you can make Penguins move() by sharing code with Fish, even though Penguins are Birds.*/
+/*Bonus: see if you can make Penguins move() by sharing code with Fish, even though Penguins are Birds.*/
