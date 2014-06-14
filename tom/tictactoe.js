@@ -1,23 +1,60 @@
 function TicTacToeBoard() {
 
-  this.rows = (function() {
-    var rowArray = [['-','-','-'], ['-','-','-'], ['-','-','-']];
+  this.rows = (function () {
+    var rowArray = [['-', '-', '-'], ['-', '-', '-'], ['-', '-', '-']];
     return rowArray;
-  });
+  })();
 
-  this.placeX= function (row, column) {
-    this.rows[row - 1][column - 1] = 'X';
-  },
-  this.placeO= function (row, column) {
-    this.rows[row - 1][column - 1] = 'O';
-  },
-  this.clear= function () {
+  this.isValid = function (move) {
+    if (!(move == 1 || move == 2 || move == 3)) {
+      console.log('Invalid move');
+      return false;
+    }
+    return true;
+  };
 
-  },
-  this.winner= function () {
+  this.isAvailable = function (row, column) {
+    if (this.isValid(row) && this.isValid(column)) {
+      if (this.rows[row - 1][column - 1] === '-') {
+        return true;
+      } else {
+        console.log('That space is occupied');
+        return false;
+      }
+    } else {
+      return false;
+    }
+  };
 
-  },
-  this.show= function() {
+  this.placeX = function (row, column) {
+    if (this.isAvailable(row, column)) {
+      this.rows[row - 1][column - 1] = 'X';
+    } else {
+      return false;
+    }
+  };
+
+  this.placeO = function (row, column) {
+    if (this.isAvailable(row, column)) {
+      this.rows[row - 1][column - 1] = 'O';
+    } else {
+      return false;
+    }
+  }
+
+  this.clear = function () {
+    for (var i = 0; i <=2; i++) {
+      for (var j = 0; j <=2; j++) {
+        this.rows[i][j] = '-';
+      }
+    }
+  }
+
+  this.winner = function () {
+
+  }
+
+  this.show = function () {
     var display = '';
     this.rows.forEach( function(row) {
       display = '';
@@ -25,9 +62,24 @@ function TicTacToeBoard() {
         display += cell;
       });
       console.log(display); 
-    }
-    )}
+    })
+  };
 }
+
+var test = new TicTacToeBoard;
+console.log('/nBefore moves:');
+test.show();
+console.log('/n' + 'After moves:');
+test.placeX(1,1);
+test.placeO(2,2);
+test.placeX(3,3);
+test.placeO(2,3);
+test.placeX(2,1);
+test.placeO(1,3);
+test.show();
+console.log('/n' + 'After "hack":');
+test.rows[1][0] = 'apple';
+test.show();
 
 /*TicTacToeBoard.prototype = {
 
@@ -54,18 +106,6 @@ function TicTacToeBoard() {
     }
     )}
 }*/
-
-
-var test = new TicTacToeBoard;
-test.placeX(1,1);
-test.placeO(2,2);
-test.placeX(3,3);
-test.placeO(2,3);
-test.placeX(2,1);
-test.placeO(1,3);
-test.show();
-test.rows[1][0] = 'apple';
-test.show();
 
 /*function TicTacToeBoard() {
   this.rows = rows = [[], [], []];
