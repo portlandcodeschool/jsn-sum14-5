@@ -5,30 +5,30 @@ function Animal() {
 }
 
 function Bird() {
-  Bird.prototype = new Animal();
-  Bird.prototype.constructor = Bird;
   this.move = function() {
     return 'fly';
   }
   this.hasWings = true;
 }
+Bird.prototype = new Animal();
+Bird.prototype.constructor = Bird;
 
 
 function Fish() {
-  Fish.prototype = new Animal();
-  Fish.prototype.constructor = Fish;
   this.move = function() {
     return 'swim';
   }
 }
+Fish.prototype = new Animal();
+Fish.prototype.constructor = Fish;
 
 function Penguin() {
-  Penguin.prototype = new Bird();
-  Penguin.prototype. constructor = Bird;
   this.move = function() {
     return 'swim';
   }
 }
+Penguin.prototype = new Bird();
+Penguin.prototype.constructor = Penguin;
 
 /*4) Simple Subclassing
 
@@ -49,7 +49,7 @@ new Bird().move();// 'fly'
 var pengo = new Penguin();
 pengo.move();  //'swim'
 pengo.hasWings; //true;
-pengo instanceof Bird; //true For some reason this is failing, but it's 1am.
+pengo instanceof Bird; //true
 pengo instanceof Animal; //true
 
 /*Bonus: see if you can make Penguins move() by sharing code with Fish, even though Penguins are Birds.*/
