@@ -44,8 +44,8 @@ function TicTacToeBoard() {
                     item.contents = "x";
                     gridScore[x] += 1;
                     gridScore[3 + y] += 1;
-                    if (x == y) gridScore[7] += 1;
-                    if ((2 - x) == y) gridScore[8] += 1;
+                    if (x == y) gridScore[6] += 1;
+                    if ((2 - x) == y) gridScore[7] += 1;
                 }
             }
 
@@ -74,15 +74,22 @@ function TicTacToeBoard() {
         gridScore = [0,0,0,0,0,0,0,0];
     }
     this.winner = function () {
-        gridScore.map(function (item) {
-            console.log(item);
-            if((item == -3) || (item == 3)){console.log("We have a winner!")};
+        var result = [];
+        gridScore.map(function (item, index) {
+            if((item == -3) || (item == 3)){
+                console.log("We have a winner!");
+                for(i = 0; i < 3; i++){
+                if(index < 3) result[i] = {x:index,y:i};
+                if(index >= 3) result[i] = {x:i, y:(index-2)};
+                if(index >= 6) result[i] = {x:i, y:i};
+                if(index == 7) result[i] = {x:(i), y:(2-i)}
+                }
+                (item == 3) ? result[3] = "x" : result[3] = "o";
+            };
 
         })
-
+        return result;
     }
-
-
 
 }
 
