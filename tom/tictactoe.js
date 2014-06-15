@@ -1,9 +1,6 @@
 function TicTacToeBoard() {
 
-  this.rows = (function () {
-    var rowArray = [['-', '-', '-'], ['-', '-', '-'], ['-', '-', '-']];
-    return rowArray;
-  })();
+  var rows = [['-', '-', '-'], ['-', '-', '-'], ['-', '-', '-']];
 
   this.isValid = function (move) {
     if (!(move == 1 || move == 2 || move == 3)) {
@@ -15,7 +12,7 @@ function TicTacToeBoard() {
 
   this.isAvailable = function (row, column) {
     if (this.isValid(row) && this.isValid(column)) {
-      if (this.rows[row - 1][column - 1] === '-') {
+      if (rows[row - 1][column - 1] === '-') {
         return true;
       } else {
         console.log('That space is occupied');
@@ -28,7 +25,7 @@ function TicTacToeBoard() {
 
   this.placeX = function (row, column) {
     if (this.isAvailable(row, column)) {
-      this.rows[row - 1][column - 1] = 'X';
+      rows[row - 1][column - 1] = 'X';
     } else {
       return false;
     }
@@ -36,7 +33,7 @@ function TicTacToeBoard() {
 
   this.placeO = function (row, column) {
     if (this.isAvailable(row, column)) {
-      this.rows[row - 1][column - 1] = 'O';
+      rows[row - 1][column - 1] = 'O';
     } else {
       return false;
     }
@@ -45,18 +42,33 @@ function TicTacToeBoard() {
   this.clear = function () {
     for (var i = 0; i <=2; i++) {
       for (var j = 0; j <=2; j++) {
-        this.rows[i][j] = '-';
+        rows[i][j] = '-';
       }
     }
   }
 
-  this.winner = function () {
+  this.horizontalCheck = function (row) {
+    if (row.every(function(cell) {
+      (cell == 'X') || (cell == 'O') })
+       ) {
+         console.log(rows[row][0] + ' is the winner!');
+         return true;
+       }
+  }
 
+  this.verticalCheck = function () {
+    //might have to do this as a regular for loop with a counter
+  }
+
+  this.winner = function () {
+    rows.forEach(function(row) {this.horizontalCheck(row);});
+    rows[0].forEach(function(cell) {this.verticalCheck(cell);});
+    this.diagonalCheck();
   }
 
   this.show = function () {
     var display = '';
-    this.rows.forEach( function(row) {
+    rows.forEach( function(row) {
       display = '';
       row.forEach( function(cell) {
         display += cell;
