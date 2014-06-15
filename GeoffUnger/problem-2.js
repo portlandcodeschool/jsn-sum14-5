@@ -5,11 +5,13 @@
  * Time: 4:07 PM
  */
 
-function TicTacToeBoard() {
+function TicTacToeBoard(callBack) {
     var cells = [];
     var xPos = 0;
     var yPos = 0;
     var gridScore = [0,0,0,0,0,0,0,0];
+    var numberOfMoves = 0;
+
     for (i = 0; i <= 8; i++) {
         cells[i] = {};
         cells[i].xPos = xPos;
@@ -46,6 +48,9 @@ function TicTacToeBoard() {
                     gridScore[3 + y] += 1;
                     if (x == y) gridScore[6] += 1;
                     if ((2 - x) == y) gridScore[7] += 1;
+                    winner();
+                    numberOfMoves++;
+                    if(numberOfMoves == 9) callBack("The game was a draw!");
                 }
             }
 
@@ -61,7 +66,9 @@ function TicTacToeBoard() {
                 gridScore[3 + y] -= 1;
                 if (x == y) gridScore[6] -= 1;
                 if ((2 - x) == y) gridScore[7] -= 1;
-
+                winner();
+                numberOfMoves++;
+                if(numberOfMoves == 9) callBack("The game was a draw!");
             }
 
         })
@@ -72,8 +79,12 @@ function TicTacToeBoard() {
             item.contents = "e";
         })
         gridScore = [0,0,0,0,0,0,0,0];
+        numberOfMoves = 0;
     }
-    this.winner = function () {
+
+
+
+    winner = function () {
         var result = [];
         gridScore.map(function (item, index) {
             if((item == -3) || (item == 3)){
@@ -85,11 +96,15 @@ function TicTacToeBoard() {
                 if(index == 7) result[i] = {x:(i), y:(2-i)}
                 }
                 (item == 3) ? result[3] = "x" : result[3] = "o";
+                callBack("The winner was " + result[3] + "!");
             };
 
         })
+
         return result;
     }
+    this.winner = winner;
+
 
 }
 
