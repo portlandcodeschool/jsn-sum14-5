@@ -6,6 +6,7 @@
  */
 
 function TicTacToeBoard(callBack) {
+    if(!callBack) callBack = function(msg){console.log(msg)};
     var cells = [];
     var xPos = 0;
     var yPos = 0;
@@ -68,7 +69,7 @@ function TicTacToeBoard(callBack) {
                 if ((2 - x) == y) gridScore[7] -= 1;
                 winner();
                 numberOfMoves++;
-                if(numberOfMoves == 9) callBack("The game was a draw!");
+                (numberOfMoves == 9 && callBack("The game was a draw!"));
             }
 
         })
