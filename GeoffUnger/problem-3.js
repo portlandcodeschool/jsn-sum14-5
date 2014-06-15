@@ -16,7 +16,27 @@ var Card = (function () {
 
     }
 
-    Card.prototype.cardID
+    Card.cardID = function (rank, suit) {
+        var index = 0;
+        for (j = 1; j <= 13; j++) {
+            for (k = 1; k <= 4; k++) {
+                if ((suit == k) && (rank == j)) return index;
+                index++;
+            }
+        }
+    }
+
+    Card.cardRank = function(id){
+        return Card.prototype.rank.call({id:id});
+    }
+
+    Card.cardSuit = function(id){
+        return Card.prototype.suit.call({id:id});
+    }
+
+    Card.cardName = function(id){
+        return Card.prototype.cardName.call({suit:function(){return Card.cardSuit(id)}, rank:function(){return Card.cardRank(id)}})
+    }
 
     Card.prototype.checkInput = function (val, min, max) {
         if ((typeof val) != "number") return NaN;
@@ -26,8 +46,6 @@ var Card = (function () {
     }
 
     Card.prototype.rank = function () {
-
-
         result = Math.ceil(((this.id + 1) / 4));
         return result;
     }
