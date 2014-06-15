@@ -17,7 +17,7 @@ function TicTacToeBoard(callBack) {
         cells[i] = {};
         cells[i].xPos = xPos;
         cells[i].yPos = yPos;
-        cells[i].contents = "e";
+        cells[i].contents = ".";
         xPos++;
         if (xPos > 2) {
             yPos++;
@@ -42,7 +42,7 @@ function TicTacToeBoard(callBack) {
         cells.map(function (item) {
 
             if ((item.xPos == x) && (item.yPos == y)) {
-                if (item.contents != "e") success = undefined;
+                if (item.contents != ".") success = undefined;
                 else {
                     item.contents = "x";
                     gridScore[x] += 1;
@@ -61,7 +61,7 @@ function TicTacToeBoard(callBack) {
     this.placeO = function (x, y) {
         cells.map(function (item) {
             if ((item.xPos == x) && (item.yPos == y)) {
-                if (item.contents != "e") return undefined;
+                if (item.contents != ".") return undefined;
                 item.contents = "o";
                 gridScore[x] -= 1;
                 gridScore[3 + y] -= 1;
@@ -77,7 +77,7 @@ function TicTacToeBoard(callBack) {
     }
     this.clear = function () {
         cells.map(function (item) {
-            item.contents = "e";
+            item.contents = ".";
         })
         gridScore = [0,0,0,0,0,0,0,0];
         numberOfMoves = 0;
