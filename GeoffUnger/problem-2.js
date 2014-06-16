@@ -1,10 +1,3 @@
-/**
- * Created with PhpStorm.
- * User: geoffreyunger
- * Date: 6/14/14
- * Time: 4:07 PM
- */
-
 function TicTacToeBoard(callBack) {
     if(!callBack) callBack = function(msg){console.log(msg)};
     var cells = [];
@@ -37,18 +30,18 @@ function TicTacToeBoard(callBack) {
         }
         console.log(row);
     }
-    this.placeX = function (x, y) {
+
+    var place = function(x,y,team, score){
         var success = true;
         cells.map(function (item) {
-
             if ((item.xPos == x) && (item.yPos == y)) {
                 if (item.contents != ".") success = undefined;
                 else {
-                    item.contents = "x";
-                    gridScore[x] += 1;
-                    gridScore[3 + y] += 1;
-                    if (x == y) gridScore[6] += 1;
-                    if ((2 - x) == y) gridScore[7] += 1;
+                    item.contents = team;
+                    gridScore[x] += score;
+                    gridScore[3 + y] += score;
+                    if (x == y) gridScore[6] += score;
+                    if ((2 - x) == y) gridScore[7] += score;
                     winner();
                     numberOfMoves++;
                     if(numberOfMoves == 9) callBack("The game was a draw!");
@@ -58,22 +51,11 @@ function TicTacToeBoard(callBack) {
         })
         return success;
     }
+    this.placeX = function (x, y) {
+        return place(x,y,"x",1);
+    }
     this.placeO = function (x, y) {
-        cells.map(function (item) {
-            if ((item.xPos == x) && (item.yPos == y)) {
-                if (item.contents != ".") return undefined;
-                item.contents = "o";
-                gridScore[x] -= 1;
-                gridScore[3 + y] -= 1;
-                if (x == y) gridScore[6] -= 1;
-                if ((2 - x) == y) gridScore[7] -= 1;
-                winner();
-                numberOfMoves++;
-                (numberOfMoves == 9 && callBack("The game was a draw!"));
-            }
-
-        })
-        return true;
+        return place(x,y,"o", -1);
     }
     this.clear = function () {
         cells.map(function (item) {
@@ -83,9 +65,7 @@ function TicTacToeBoard(callBack) {
         numberOfMoves = 0;
     }
 
-
-
-    winner = function () {
+    var winner = function () {
         var result = [];
         gridScore.map(function (item, index) {
             if((item == -3) || (item == 3)){
@@ -105,7 +85,5 @@ function TicTacToeBoard(callBack) {
         return result;
     }
     this.winner = winner;
-
-
 }
 
