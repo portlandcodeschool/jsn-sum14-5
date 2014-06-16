@@ -28,9 +28,13 @@ function TicTacToeBoard() {
     return rows[(coord[1])][(coord[0]) ];
   };
 
-  this.placeX = function (x, y) { // coordinate inconsistency
+  this.placeX = function (x, y) {
     if (this.isAvailable(x, y)) {
       rows[y - 1][x - 1] = 'X';
+      if (this.winner()) {
+        this.callback();
+        return;
+      }
     } else {
       return false;
     }
@@ -39,6 +43,10 @@ function TicTacToeBoard() {
   this.placeO = function (x, y) {
     if (this.isAvailable(x, y)) {
       rows[y - 1][x - 1] = 'O';
+      if (this.winner()) {
+        this.callback();
+        return;
+      }
     } else {
       return false;
     }
@@ -54,7 +62,6 @@ function TicTacToeBoard() {
 
   this.checkCoords = function(coords) {
     for (var i = 0; i < coords.length; i++) {
-      console.log('Checking ' + coords[i] + ' vs. ' + coords[0]);
       if ((this.cellValue(coords[i]) !== 'X') && (this.cellValue(coords[i]) !== 'O')) {
         return false;
       } else if (this.cellValue(coords[i]) !== this.cellValue(coords[0])) {
@@ -66,54 +73,61 @@ function TicTacToeBoard() {
   }
 
   this.horizontalCheck = function () {
-    console.log('Begin horizontal check');
     for (var h = 0; h < rows.length; h++) {
       trialCoords = [];
       for (var i = 0; i < rows.length; i++) {
         trialCoords.push([i, h]);
       }
-    console.log('horizontal trialCoords: ' + trialCoords);
     if (this.checkCoords(trialCoords)) { return true; }
     }
     return false;
   }
 
   this.verticalCheck = function () {
-    console.log('Begin vertical check');
     for (var i = 0; i < rows.length; i++) {
       trialCoords = [];
       for (var j = 0; j < rows.length; j++) {
         trialCoords.push([i, j]);
       }
-      console.log('vertical trialCoords: ' + trialCoords);
       if (this.checkCoords(trialCoords)) {return true; }
     }
     return false;
   }
 
   this.diagonalCheck = function () {
-    console.log('Begin diagonal check');
     trialCoords = [];
     for (var i = 0; i < rows.length; i++) {
       trialCoords.push([i, i])
     }
-    console.log('1st diagonal trialCoords: ' + trialCoords);
     if (!this.checkCoords(trialCoords)) {
       trialCoords = [];
       for (var j = 0; j < rows.length; j++) {
         trialCoords.push([ j, (rows.length - 1 - j)]);
       }
     }
-    console.log('2nd diagonal trialCoords: ' + trialCoords);
     return this.checkCoords(trialCoords);
   }
 
+  this.makeCoordinate = function (coord) {
+    var coordinate = {};
+    coordinate.x = coord[0];
+    coordinate.y = coord[1];
+    return coordinate;
+  }
+
+  this.winningCoords = function(coords) {
+    var winnerArray = [], obj = { x: undefined, y: undefined };
+    for ( var i = 0; i < coords.length; i++ ) {
+      winnerArray.push(this.makeCoordinate(coords[i]));
+    }
+    winnerArray.winner = coords.winner;
+    return winnerArray;
+  }
+
   this.winner = function () {
-    
-    
-    if (this.horizontalCheck()) { console.log('Horizontal check passed!'); return trialCoords; }
-    else if (this.verticalCheck()) { console.log('Vertical check passed! '); return trialCoords; }
-    else if (this.diagonalCheck()) { console.log('Diagonal check passed!'); return trialCoords;   }
+    if (this.horizontalCheck()) { return this.winningCoords(trialCoords); }
+    else if (this.verticalCheck()) { return this.winningCoords(trialCoords); }
+    else if (this.diagonalCheck()) { return this.winningCoords(trialCoords); }
     else { return false; }
   }
 
@@ -127,6 +141,11 @@ function TicTacToeBoard() {
       console.log(display); 
     })
   };
+  
+  this.callback = function () {
+    console.log('Game over, man!');
+  }
+
 }
 
 var test = new TicTacToeBoard;
