@@ -52,78 +52,43 @@ function TicTacToeBoard() {
     }
   }
 
-  /*
-  this.horizontalCheck = function (row) {
-    if (row.every(function(cell) {
-      (cell === 'X') || (cell === 'O') 
-    }))
-    {
-      trialCoords.winner = cell;
-      console.log(rows[row][0] + ' is the winner!');
-      return true;
-    }
-  }
-
-  this.verticalCheck = function (cell) { 
-    for (var j = 0; j < rows.length; j++) {
-      if (rows[cell][j] !== rows[cell][0]) {
+  checkCoords = function(coords) {
+    for (var i = 0; i < coords.length; i++) {
+      if ((cellValue(coords[i]) !== 'X') && (cellValue(coords[i]) !== 'O')) {
         return false;
-      }
-      console.log(rows[cell][0] + ' is the winner!');
-      trialCoords.winner = rows[cell][0];
-      return true;
-    }
-  }
-
-  this.diagonalCheck = function() {
-    for (var k = 0; k < rows.length; k++) { // top-left to bottom-right
-      if (rows[k][k] !== rows[0][0]) {
+      } else if (cellValue(coords[i]) !== cellValue(coords[0])) {
         return false;
-      }
-      console.log(rows[0][0] + ' is the winner!');
-      return true;
-    }
-    for (var j = 0; j < rows.length; j++) { // top-right to bottom-left
-      if (rows[j][(rows.length - 1) - j] !== rows[0][rows.length - 1]) {
-        return false;
-      }
-      console.log(rows[0][rows.length - 1] + ' is the winner!');
-      return true;
-    }
-  }*/
-
-// Each win check should shovel the values into the trialCoords and then run a .every check; if it passes, the array is pre-stocked.
-
-  this.checkCoords = function(coords) {
-    coords.forEach( function(coord) {
-      if cellValue(coord) !== ( 'X' || 'O' )) {return false;}
-      else {
-        if ( cellValue(coord) !== cellValue(coords[0] ) {
-          return false; // check vs. first coord
-        })
       }
     }
     trialCoords.winner = cellValue(coords[0]);
     return true;
   }
 
-  this.winner = function () {
+  this.horizontalCheck = function () {
     for (var h = 0; h < rows.length; h++) {
       trialCoords = [];
       for (var i = 0; i < rows.length; i++) {
         trialCoords.push([i, h]);
       }
-      checkCoords(trialCoords);
     }
+    return this.checkCoords(trialCoords);
+  }
+
+  this.verticalCheck = function () {
     for (var i = 0; i < rows.length; i++) {
       trialCoords = [];
-      if(this.verticalCheck(i)) {
-        for (var j = 0; j < rows.length; j++) {
-          trialCoords.push({x: i, y: j})
-        }
+      for (var j = 0; j < rows.length; j++) {
+        trialCoords.push([i, j]);
       }
     }
-    this.diagonalCheck();
+    return this.checkCoords(trialCoords);
+  }
+// build diagonalCheck
+  this.winner = function () {
+    if (this.horizontalCheck) { return trialCoords; }
+    else if (this.verticalCheck) { return trialCoords; }
+    else if (this.diagonalCheck) { return trialCoords;   }
+    else { return false; }
   }
 
   this.show = function () {
