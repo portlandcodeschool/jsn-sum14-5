@@ -11,9 +11,9 @@ function TicTacToeBoard() {
     return true;
   };
 
-  this.isAvailable = function (row, column) {
-    if (this.isValid(row) && this.isValid(column)) {
-      if (rows[row - 1][column - 1] === '-') {
+  this.isAvailable = function (x, y) {
+    if (this.isValid(x) && this.isValid(y)) {
+      if (rows[y - 1][x - 1] === '-') {
         return true;
       } else {
         console.log('That space is occupied');
@@ -25,20 +25,20 @@ function TicTacToeBoard() {
   };
 
   this.cellValue = function(coord) {
-    return rows[(coord[1] - 1)][(coord[0] -1) ];
+    return rows[(coord[1])][(coord[0]) ];
   };
 
-  this.placeX = function (row, column) {
-    if (this.isAvailable(row, column)) {
-      rows[row - 1][column - 1] = 'X';
+  this.placeX = function (x, y) { // coordinate inconsistency
+    if (this.isAvailable(x, y)) {
+      rows[y - 1][x - 1] = 'X';
     } else {
       return false;
     }
   };
 
-  this.placeO = function (row, column) {
-    if (this.isAvailable(row, column)) {
-      rows[row - 1][column - 1] = 'O';
+  this.placeO = function (x, y) {
+    if (this.isAvailable(x, y)) {
+      rows[y - 1][x - 1] = 'O';
     } else {
       return false;
     }
@@ -52,42 +52,68 @@ function TicTacToeBoard() {
     }
   }
 
-  checkCoords = function(coords) {
+  this.checkCoords = function(coords) {
     for (var i = 0; i < coords.length; i++) {
-      if ((cellValue(coords[i]) !== 'X') && (cellValue(coords[i]) !== 'O')) {
+      console.log('Checking ' + coords[i] + ' vs. ' + coords[0]);
+      if ((this.cellValue(coords[i]) !== 'X') && (this.cellValue(coords[i]) !== 'O')) {
         return false;
-      } else if (cellValue(coords[i]) !== cellValue(coords[0])) {
+      } else if (this.cellValue(coords[i]) !== this.cellValue(coords[0])) {
         return false;
       }
     }
-    trialCoords.winner = cellValue(coords[0]);
+    trialCoords.winner = this.cellValue(coords[0]);
     return true;
   }
 
   this.horizontalCheck = function () {
+    console.log('Begin horizontal check');
     for (var h = 0; h < rows.length; h++) {
       trialCoords = [];
       for (var i = 0; i < rows.length; i++) {
         trialCoords.push([i, h]);
       }
+    console.log('horizontal trialCoords: ' + trialCoords);
+    if (this.checkCoords(trialCoords)) { return true; }
     }
-    return this.checkCoords(trialCoords);
+    return false;
   }
 
   this.verticalCheck = function () {
+    console.log('Begin vertical check');
     for (var i = 0; i < rows.length; i++) {
       trialCoords = [];
       for (var j = 0; j < rows.length; j++) {
         trialCoords.push([i, j]);
       }
+      console.log('vertical trialCoords: ' + trialCoords);
+      if (this.checkCoords(trialCoords)) {return true; }
     }
+    return false;
+  }
+
+  this.diagonalCheck = function () {
+    console.log('Begin diagonal check');
+    trialCoords = [];
+    for (var i = 0; i < rows.length; i++) {
+      trialCoords.push([i, i])
+    }
+    console.log('1st diagonal trialCoords: ' + trialCoords);
+    if (!this.checkCoords(trialCoords)) {
+      trialCoords = [];
+      for (var j = 0; j < rows.length; j++) {
+        trialCoords.push([ j, (rows.length - 1 - j)]);
+      }
+    }
+    console.log('2nd diagonal trialCoords: ' + trialCoords);
     return this.checkCoords(trialCoords);
   }
-// build diagonalCheck
+
   this.winner = function () {
-    if (this.horizontalCheck) { return trialCoords; }
-    else if (this.verticalCheck) { return trialCoords; }
-    else if (this.diagonalCheck) { return trialCoords;   }
+    
+    
+    if (this.horizontalCheck()) { console.log('Horizontal check passed!'); return trialCoords; }
+    else if (this.verticalCheck()) { console.log('Vertical check passed! '); return trialCoords; }
+    else if (this.diagonalCheck()) { console.log('Diagonal check passed!'); return trialCoords;   }
     else { return false; }
   }
 
@@ -113,7 +139,9 @@ test.placeX(3,3);
 test.placeO(2,3);
 test.placeX(2,1);
 test.placeO(1,3);
+test.placeX(3,1);
 test.show();
+console.log(test.winner());
 //console.log('/n' + 'After "hack":');
 //test.rows[1][0] = 'apple';
 //test.show();
