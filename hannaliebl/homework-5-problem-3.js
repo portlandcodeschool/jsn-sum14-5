@@ -101,3 +101,18 @@ var card2 = new Card(2);
 card2.rank();
 card2.suit();
 card2 instanceof Card //true
+
+
+///////////////////////////////////////////
+
+//part of PART C
+//...maybe :/
+
+Card.prototype = {
+    rank: function(cardID) {
+        return Math.floor(cardID / 4) + 1;
+    },
+    suit: function(cardID) {
+        return (cardID % 4) + 1;
+    }
+}
