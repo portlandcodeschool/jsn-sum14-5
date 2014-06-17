@@ -66,7 +66,7 @@ function TicTacToeBoard(cb) {
       }
       //check diags
       if (board[0][0] === i && board[1][1] === i && board[2][2] === i) {
-        winners = [{x:0,y:0},{x:1,y:1},{x:2,y:2}, symbol];
+        winner = [{x:0,y:0},{x:1,y:1},{x:2,y:2}, symbol];
       }
       if (board[0][2] === i && board[1][1] === i && board[2][0] === i) {
         winner = [{x:2,y:0},{x:1,y:1},{x:0,y:2}, symbol];
