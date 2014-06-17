@@ -7,8 +7,12 @@ function TicTacToeBoard(cb) {
     [0, 0, 0]
   ];
 
+  function gameOver() {
+    console.log('Game Over');
+  };
+
   //callback
-  this.cb = cb || console.log('Game over');
+  this.cb = cb || gameOver;
 
   this.show = function() {
     var str = '';
