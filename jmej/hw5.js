@@ -58,31 +58,53 @@ existing properties of it's prototype object - so those proto/prototype links re
 
 //2)
 var ticTacToe = (function(){
-squares = {00:false, 01:false, 02:false, 10:false, 11:false, 12:false, 20:false, 22:false, 23:false};
+var squares = ["*", "*", "*", "*", "*", "*", "*", "*", "*"];
+var address = ["00", "01", "02", "10", "11", "12", "20", "21", "22"];
 
 function TicTacToeBoard(){
 	this.move = function(x, y, player){
-		var square = x+y;
-		if (this.squares[square] != false){
-		return squares[square]+"already made that move!";}
-		else{squares[square] = player; 
-             console.log("nice move"+player);
-             this.show();
-		     this.win();}
+        var newMove = String(x)+String(y);
+		var square = address.indexOf(newMove);
+		if (squares[square] != '*'){
+            this.show();
+		    console.log(squares[square]+" already made that move!");
+            }
+		else{
+            squares[square] = player; 
+            console.log("nice move "+player);
+            this.show();
+		    this.win();
+            }
 	}
 	this.win = function(){
-		if (squares.00 && squares.01 && squares.02)
-/*		|| (squares.10 && squares.11 && squares.12)
-		|| (squares.20 && squares.21 && squares.22)
-		|| (squares.00 && squares.11 && squares.22)
-		|| (squares.20 && squares.12 && squares.03))*/
-        {return squares.11 + "is the winner!";}
+        for (var i = 0; i<9; i++){
+        if (i % 3 == 0)   
+           if(squares[i] == squares[i+1])
+              if (squares[i+2] == squares [i])
+                if (squares[i] != "*")
+          {console.log(squares[1] + " is the winner!");}
+        }
+                for (var i = 0; i<9; i++){
+        if (i % 3 == 1)   
+           if(squares[i] == squares[i+3])
+              if (squares[i+3] == squares [i+6])
+                if (squares[i] != "*")
+          {console.log(squares[1] + " is the winner!");}
+        }
 	}
 	this.show = function(){
-		console.log(squares);
+        var row0 = String(squares[0])+" "+String(squares[1])+" "+String(squares[2]);
+        var row1 = String(squares[3])+" "+String(squares[4])+" "+String(squares[5]);
+        var row2 = String(squares[6])+" "+String(squares[7])+" "+String(squares[8]);
+		console.log(row2+"\n"+" "+row1+"\n"+" "+row0);
 
 	}
+    this.clear = function(){
+        squares = ["*", "*", "*", "*", "*", "*", "*", "*", "*"];
+        this.show();
+    }
 }
 var game = new TicTacToeBoard();
 return game;
-}());
+})();
+
