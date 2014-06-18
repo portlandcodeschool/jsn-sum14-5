@@ -1,35 +1,42 @@
-function TicTacToeBoard(callBack) {
+function TicTacToeBoard(size, callBack) {
     if(!callBack) callBack = function(msg){console.log(msg)};
     var cells = [];
+    var numCells = (Math.pow(size,2));
     var xPos = 0;
     var yPos = 0;
-    var gridScore = [0,0,0,0,0,0,0,0];
+    var gridScore = [];
     var numberOfMoves = 0;
 
-    for (i = 0; i <= 8; i++) {
+    for(i = 0; i < ((size*2)+2); i++){
+        gridScore[i] = 0;
+    }
+
+    for (i = 0; i < numCells; i++) {
         cells[i] = {};
         cells[i].xPos = xPos;
         cells[i].yPos = yPos;
         cells[i].contents = ".";
         xPos++;
-        if (xPos > 2) {
+        if (xPos > (size-1)) {
             yPos++;
             xPos = 0;
         }
     }
-    this.show = function () {
+    var show = function () {
         var count = 0;
         var row = "";
-        for (i = 0; i < 9; i++) {
+        for (i = 0; i < numCells; i++) {
             row += (cells[i].contents + " ");
             count++;
-            if (count == 3) {
+            if (count == size) {
                 row += "\n";
                 count = 0;
             }
         }
         console.log(row);
     }
+
+    this.show = show;
 
     var place = function(x,y,team, score){
         var success = true;
@@ -39,12 +46,12 @@ function TicTacToeBoard(callBack) {
                 else {
                     item.contents = team;
                     gridScore[x] += score;
-                    gridScore[3 + y] += score;
-                    if (x == y) gridScore[6] += score;
-                    if ((2 - x) == y) gridScore[7] += score;
+                    gridScore[size + y] += score;
+                    if (x == y) gridScore[(size * 2)+1] += score;
+                    if ((2 - x) == y) gridScore[(size * 2)+2] += score;
                     winner();
                     numberOfMoves++;
-                    if(numberOfMoves == 9) callBack("The game was a draw!");
+                    if(numberOfMoves == numCells) callBack("The game was a draw!");
                 }
             }
 
@@ -61,22 +68,25 @@ function TicTacToeBoard(callBack) {
         cells.map(function (item) {
             item.contents = ".";
         })
-        gridScore = [0,0,0,0,0,0,0,0];
+        for(i = 0; i < (size+2); i++){
+            gridScore[i] = 0;
+        }
         numberOfMoves = 0;
     }
 
     var winner = function () {
         var result = [];
         gridScore.map(function (item, index) {
-            if((item == -3) || (item == 3)){
+            if((item == -size) || (item == size)){
                 console.log("We have a winner!");
-                for(i = 0; i < 3; i++){
-                if(index < 3) result[i] = {x:index,y:i};
-                if(index >= 3) result[i] = {x:i, y:(index-2)};
-                if(index >= 6) result[i] = {x:i, y:i};
-                if(index == 7) result[i] = {x:(i), y:(2-i)}
+                show();
+                for(i = 0; i < size; i++){
+                if(index < size) result[i] = {x:index,y:i};
+                if(index >= size) result[i] = {x:i, y:(index-(size-1))};
+                if(index >= ((size*2)+1)) result[i] = {x:i, y:i};
+                if(index == ((size*2)+2)) result[i] = {x:(i), y:((size-1)-i)}
                 }
-                (item == 3) ? result.winner = "x" : result.winner = "o";
+                (item == size) ? result.winner = "x" : result.winner = "o";
                 callBack("The winner was " + result.winner + "!");
             };
 
