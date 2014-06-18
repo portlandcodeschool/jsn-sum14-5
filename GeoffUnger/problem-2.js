@@ -96,8 +96,8 @@ function TicTacToeBoard(callBack) {
                 if(index >= 6) result[i] = {x:i, y:i};
                 if(index == 7) result[i] = {x:(i), y:(2-i)}
                 }
-                (item == 3) ? result[3] = "x" : result[3] = "o";
-                callBack("The winner was " + result[3] + "!");
+                (item == 3) ? result.winner = "x" : result.winner = "o";
+                callBack("The winner was " + result.winner + "!");
             };
 
         })
