@@ -2,28 +2,58 @@
 
 function Card(id) {
 
-  if (!isValid(id)) return;
+  if (!Card.isValid(id, 0, 51))
+    return NaN;
 
   this.id = id;
+}
 
-  function isValid(num) {
-    if (typeof num !== 'number') return false;
-    if (!(num % 1 === 0)) return false;
-    if (num < 0 || num > 51) return false;
-    return true;
-  };
+Card.isValid = function(num, low, high) {
+  if (typeof num !== 'number')
+    return false;
+  if (num % 1 !== 0)
+    return false;
+  if (num < low || num > high)
+    return false;
+  return true;
 };
 
-Card.prototype.ranks = ['Ace','Two','Three','Four','Five','Six','Seven','Eight','Nine','Ten', 'Jack','Queen','King'];
+Card.cardID = function(rank, suit) {
+  if (!this.isValid(rank, 1, 13) && !this.isValid(suit, 1, 4))
+    return NaN;
+  return ((rank - 1) * 4 + (suit - 1));
+};
 
-Card.prototype.suits = ['Hearts','Diamonds','Spades','Clubs'];
+Card.cardRank = function(id) {
+  if (!this.isValid(id, 0, 51))
+    return NaN;
+  return Math.floor(id / 4) + 1;
+};
+
+Card.cardSuit = function(id) {
+  if (!this.isValid(id, 0, 51))
+    return NaN;
+  return (id % 4) + 1;
+};
+
+Card.ranks = ['Ace','Two','Three','Four','Five','Six','Seven','Eight','Nine',
+              'Ten', 'Jack','Queen','King'];
+
+Card.suits = ['Hearts','Diamonds','Spades','Clubs'];
+
+Card.cardName = function(id) {
+  if (!this.isValid(id, 0, 51))
+    return NaN;
+  return this.ranks[this.cardRank(id) - 1] + ' of ' +
+    this.suits[this.cardSuit(id) - 1];
+};
 
 Card.prototype.rank = function() {
-  return Math.floor(this.id / 4) + 1;
+  return Card.cardRank(this.id);
 };
 
 Card.prototype.suit = function() {
-  return (this.id % 4) + 1;
+  return Card.cardSuit(this.id);
 };
 
 Card.prototype.cardID = function() {
@@ -35,7 +65,7 @@ Card.prototype.color = function() {
 };
 
 Card.prototype.name = function() {
-  return this.ranks[this.rank() - 1] + ' of ' + this.suits[this.suit() - 1];
+  return Card.cardName(this.id);
 };
 
 Card.prototype.precedes = function(cardObj) {
