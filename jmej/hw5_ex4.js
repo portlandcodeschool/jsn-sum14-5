@@ -10,19 +10,19 @@ var Bird = function(){
 	this.movement = "fly";
 	this.hasWings = true;
 	Bird.prototype = new Animal();
-    Bird.prototype.constructor = Animal;
+    Bird.prototype.constructor = Bird;
 }
 
 var Fish = function(){
 	this.movement = "swim";
 	Fish.prototype = new Animal();
-    Fish.prototype.constructor = Animal;
+    Fish.prototype.constructor = Fish;
 }
 
 var Penguin = function(){
 	this.movement = "swim";
 	Penguin.prototype = new Bird();
-    Penguin.prototype.constructor = Animal;
+    Penguin.prototype.constructor = Penguin;
 }
 
 var critter = new Animal();
